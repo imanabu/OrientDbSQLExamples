@@ -35,27 +35,31 @@ After you have set up your ODB, please install the MovieRatings DB. There is a q
 
     SELECT expand(out("rated")) from Users where age < 25
   
-### List all the users who are lawyers to prep for the list movies rated by lawyers
+### List all the users who are lawyers. This is the prep for getting movies rated by lawyers.
 
     SELECT FROM Users where out("hasOccupation").description = "lawyer"
 
-* Note that the Users table also has the occupation id, and the lawyer is id = 11 so we can conform the
-graph link is proper.
+* Note that the Users table also has the occupation id, and the lawyer is id = 11. This is technically rundudant and
+  not normalized, but because it's there we can check visually in the ODB Studio.
 
-### List movies rated by lawyers
+### List the movies rated by lawyers
   
 We will build on the all above examples. The key is to feed the set of users in to the top level query.
 
     SELECT EXPAND(OUT("rated")) FROM (
       SELECT FROM Users where out("hasOccupation").description = "lawyer"
       
-### With Traversal
+### Same Query but Using Traversal
+
+If you expand this to perform other queires, you will certainly notice the perormance hit.
 
     select from (traverse * from (select from users where id=11)) where @class='Movies'
     
-### List all the "Crime" movies that were rated by "Lawyers" 
+### List all the "Crime" movies that were rated by the lawyers 
 
-This is fairly complex considering that we have only 4 types of edges and 4 types of entities.
+I am sure the lawyers would love to see crime movies. 
+
+This is fairly complex even considering that we have only 4 types of edges and 4 types of entities.
 
 1. Get all the users who are the lawers
 2. Get all the movies the lawers rated
