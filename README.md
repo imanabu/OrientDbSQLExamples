@@ -88,16 +88,53 @@ Nor this,
       ) ) WHERE OUT("hasGenera").description = "Crime"
 
 
-## More on Traverse
+### More on Traverse
 
-.. to be continued from this query which selects Users who are 50 or older who have rated Drama type movies.
+Select the Users who are 50 or older who have rated Drama type movies.
 
     select FROM (
     select From (traverse in() From (
       select from Genres where description="Drama")) where @class="Users")
         WHERE age > 50
 
+## Select the People who rated all Toy Story movies... then do some more on this
 
+### First select all Toy Story movies
+
+    SELECT FROM Movies WHERE title LIKE 'Toy Story%'
+    
+### Next, list the people who rated these
+
+    SELECT expand(in('rated')) FROM Movies WHERE title LIKE 'Toy Story%'
+
+### Of the peole who rated "Toy Story" movies what Occupations did they have?
+
+    SELECT expand(out("hasOccupation")) FROM (
+        SELECT expand(in('rated')) FROM Movies WHERE title LIKE 'Toy Story%'
+      )
+      
+### Summarize by type of occupation (use of Group By)
+
+Unfortinately this will require some coding as `GROUP BY` isn't supported as of this writing. Might change soon.
+
+### People who liked Toy Story also liked...
+
+We are now using two new things. One is that rated.rating is a property of an edge and not a vertex.
+
+For this to work, also outV() is needed not just out(). This will then list all the expended Users records. 
+
+        select expand(outV()) from rated where rating > 3 and inV().title like "Toy S%"
+        
+### Find the People who liked GoldenEye who live in the Bay Area and older than 37 years
+
+Check to see Golden Eye was watched by older adults in the Bay Area. Should this have been more detailed data,
+we can do more specific promotions.
+
+         select expand(outV()) from `rated` WHERE outV().zipCode like "94%" and outV().age > 37 and inV().title like "GoldenEye%" limit 1000
+
+
+      
+    
 
 
   
