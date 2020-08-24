@@ -9,7 +9,7 @@ After you have set up your ODB, please install the MovieRatings DB. There is a q
 
 ## Quick Check: List all the movies in ODB
 
-  SELECT FROM Movies
+    SELECT FROM Movies
   
 ## The Graph Entity Relations
 
@@ -22,7 +22,7 @@ After you have set up your ODB, please install the MovieRatings DB. There is a q
 
 ### List all the movies a user id 2 has rated
 
-  SELECT EXPAND(OUT("rated")) FROM Users WHERE id=2
+    SELECT EXPAND(OUT("rated")) FROM Users WHERE id=2
   
 #### The Key Points
   
@@ -31,11 +31,11 @@ After you have set up your ODB, please install the MovieRatings DB. There is a q
 
 ### List all the movies rated by people under age 25
 
-  SELECT expand(out("rated")) from Users where age < 25
+    SELECT expand(out("rated")) from Users where age < 25
   
 ### List all the users who are lawyers to prep for the list movies rated by lawyers
 
-  SELECT FROM Users where out("hasOccupation").description = "lawyer"
+    SELECT FROM Users where out("hasOccupation").description = "lawyer"
 
 * Note that the Users table also has the occupation id, and the lawyer is id = 11 so we can conform the
 graph link is proper.
@@ -44,13 +44,58 @@ graph link is proper.
   
 We will build on the all above examples. The key is to feed the set of users in to the top level query.
 
-  SELECT EXPAND(OUT("rated")) FROM (
-    SELECT FROM Users where out("hasOccupation").description = "lawyer")
+    SELECT EXPAND(OUT("rated")) FROM (
+      SELECT FROM Users where out("hasOccupation").description = "lawyer"
+      
+### With Traversal
+
+    select from (traverse * from (select from users where id=11)) where @class='Movies'
     
-* There are other ways of doing this. This is just one way.
+### List all the "Crime" movies that were rated by "Lawyers" 
+
+This is fairly complex considering that we have only 4 types of edges and 4 types of entities.
+
+1. Get all the users who are the lawers
+2. Get all the movies the lawers rated
+3. Get the lawyer rated movies and have the Genere of "Crime"
+4. Bonus sort the movies by title
+
+      SELECT FROM (
+      SELECT EXPAND(OUT("rated")) FROM (
+          SELECT FROM Users where out("hasOccupation").description = "lawyer")
+        ) WHERE OUT("hasGenera").description = "Crime"
+      ORDER BY title
+
+#### With Traverse
+
+    select from (traverse * from (
+      select * from Occupation where description='lawyer'
+      )) where @class='Movies'
+
+#### Tempting, but do not do this. It will take forever!
+
+    select from (traverse * from (
+      select * from Occupation where description='lawyer'
+      )) where @class='Movies' AND OUT("hasGenera").description = "Crime"
+      
+Nor this,
+
+    select FROM (
+    select from (
+      select from (traverse * from (
+          select * from Occupation where description='lawyer'
+        )) where @class='Movies'
+      ) ) WHERE OUT("hasGenera").description = "Crime"
 
 
+## More on Traverse
 
+.. to be continued from this query which selects Users who are 50 or older who have rated Drama type movies.
+
+    select FROM (
+    select From (traverse in() From (
+      select from Genres where description="Drama")) where @class="Users")
+        WHERE age > 50
 
 
 
