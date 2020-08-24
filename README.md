@@ -17,6 +17,8 @@ After you have set up your ODB, please install the MovieRatings DB. There is a q
 
 * Users can rate movies and they also have occupations
 * Movies can be rated by the users and they have genres
+* Note that **rated** has one property named `rating` which is a number of 0 to 5. This value is not on the Vertex, 
+  but it is on the Edge.
 
 ## The Query Collection
 
