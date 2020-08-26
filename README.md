@@ -139,7 +139,10 @@ we can do more specific promotions.
          select expand(outV()) from `rated` WHERE outV().zipCode like "94%" and outV().age > 37 and inV().title like "GoldenEye%" limit 1000
 
 
-      
+## Next
+
+Now you understand the basics, let's tackle a bit more complex set of
+situation with the [DemoDB travel agency database.](DemoDB-SQLs.md)
     
 
 
