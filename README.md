@@ -7,6 +7,8 @@ I will be referring to the OrientDB as ODB or OD throughout this document.
 
 After you have set up your ODB, please install the MovieRatings DB. There is a quick setup for this in the ODB Studio login panel, from where you can create a new DB.
 
+This was written with ODB 3.x. Some of the queries may not work in 2.x.
+
 ## Quick Check: List all the movies in ODB
 
     SELECT FROM Movies
@@ -107,21 +109,49 @@ Select the Users who are 50 or older who have rated Drama type movies.
 
 ### First select all Toy Story movies
 
+There are more than one in the Toy Story database from different release years.  This will
+show you all of them.
+
     SELECT FROM Movies WHERE title LIKE 'Toy Story%'
     
 ### Next, list the people who rated these
 
     SELECT expand(in('rated')) FROM Movies WHERE title LIKE 'Toy Story%'
 
-### Of the peole who rated "Toy Story" movies what Occupations did they have?
+### Of the people who rated "Toy Story" movies what Occupations did they have?
 
     SELECT expand(out("hasOccupation")) FROM (
         SELECT expand(in('rated')) FROM Movies WHERE title LIKE 'Toy Story%'
       )
-      
-### Summarize by type of occupation (use of Group By)
 
-Unfortinately this will require some coding as `GROUP BY` isn't supported as of this writing. Might change soon.
+
+### Summarize by type of occupation (use of Group By) who rated Toy Story movies
+
+Here is one way to obtain the answer. 
+
+    SELECT count(out("hasOccupation")) AS C1, out("hasOccupation").description[0] AS D1 FROM (
+            SELECT expand(in('rated')) FROM Movies WHERE title LIKE 'Toy Story%'
+          ) GROUP BY out("hasOccupation") order by C1 desc
+
+
+    In my run this resulted in;
+
+        538 college/grad student
+        449 other
+        341 executive/managerial
+        313 technician/engineer
+
+#### Key Points
+
+* This requires ODB 3.x or later. Also note that `GROUP BY` may not work unless you perform
+it on the record IDs like
+
+    GROUP BY out("hasOccupation")
+
+* This demonstrates the use of `AS`. Unlike most SQL `ORDER BY 1` would not work.
+* The reason for `out("hasOccupation").description[0]` is that if you do not use `[0]`
+  the result will be an array of strings. 
+
 
 ### People who liked Toy Story also liked...
 
