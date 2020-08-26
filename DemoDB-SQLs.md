@@ -1,6 +1,6 @@
 # OrientDB "DemoDB" SQL Collections (More Advanced)
 
-![Demo Schema Example](DemoDB.png)
+![Demo Schema Example](https://github.com/imanabu/OrientDbSQLExamples/blob/master/demoDB.png)
 
 ## The Background
 
