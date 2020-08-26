@@ -4,14 +4,19 @@
 
 ## The Background
 
-OrientDB (ODB) ships the **DemoDB** and usually it is installed out of the
-box.
+This is Part 2 of my OrientDB SQL collections and this will deal with more complex
+queries than on Part 1. I encourage you to read [Part1](./README.md) if you have not yet
+done so.
 
-This DB contains a "Travel Industry" demo data where you can traverse a
+OrientDB (ODB) ships the **DemoDB** and usually it is installed out of the
+box. These examples are based on ODB 3.x. Many queries here will not work if you
+are using ODB 2.x.
+
+The DemoDB contains a "Travel Industry" demo data where you can traverse a
 diversity of edges to discover a travellers path. 
 
 Should this have been a **live** real data and if you are a marketing consultant
-to a travel agency, we can use the OrientDB's Graph Query capabilities to
+working the travel industry, we could use the OrientDB's Graph Query capabilities to
 find situations like.
 
 * Where did Luca eat during his visit to Italy?
@@ -19,14 +24,8 @@ find situations like.
   visited.
 * List who are the friends and friends of someone and see where they have all visited.
 
-Likewise, if you have a set of health records, you could ask questions like:
-
-Who have visited our hospital in the past 30 days with a symptom of cold and if
-any of the patients' friends also have visited for the same situation, and then
-trace who is likely the first person who spread the cold etc.
-
-Now imagine yourself as a travel agent in Milano Italy and see how you can form
-your agency's advertisement campaigns based on the data with the OrientDB SQL.
+Now imagine yourself as a travel agent marketer in Milan Italy and see how you can form
+your client's advertisement campaigns based on the data with the power of OrientDB SQL.
 
 ## What You Need
 

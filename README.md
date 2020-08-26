@@ -5,9 +5,15 @@ Various examples to clarify the use of the OrientDB SQL
 
 I will be referring to the OrientDB as ODB or OD throughout this document.
 
-After you have set up your ODB, please install the MovieRatings DB. There is a quick setup for this in the ODB Studio login panel, from where you can create a new DB.
+After you have set up your ODB, please install the MovieRatings DB. This DB is not installed
+out of the box. There is a quick setup for this in the top right corner of your ODB Studio login panel, from where you can load this example DB online into your own instance.
 
 This was written with ODB 3.x. Some of the queries may not work in 2.x.
+
+Please report any bugs in this document or examples via the GitHub Issues on this repo
+and you are welcome to contribute
+additional queries that might help out other OrientDB users and myself as well. Simply
+do a PR from your repo to me.
 
 ## Quick Check: List all the movies in ODB
 
@@ -170,8 +176,8 @@ Check to see Golden Eye was watched by older adults in the Bay Area. Should this
 
 ## Next
 
-Now you understand the basics, let's tackle a bit more complex set of
-situation with the [DemoDB travel agency database.](DemoDB-SQLs.md)
+Now you understand the basics, let's tackle a bit more advanced set of
+situations with the [DemoDB travel agency database.](DemoDB-SQLs.md)
     
 
 
