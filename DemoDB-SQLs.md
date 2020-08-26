@@ -1,6 +1,6 @@
 # OrientDB "DemoDB" SQL Collections (More Advanced)
 
-![Demo Schema Example]("./demo-schema-1.png")
+![Demo Schema Example](DemoDB.png)
 
 ## The Background
 
@@ -8,7 +8,7 @@ OrientDB (ODB) ships the **DemoDB** and usually it is installed out of the
 box.
 
 This DB contains a "Travel Industry" demo data where you can traverse a
-diverstiy of edges to discver a travenller's path. 
+diversity of edges to discover a travellers path. 
 
 Should this have been a **live** real data and if you are a marketing consultant
 to a travel agency, we can use the OrientDB's Graph Query capabilities to
@@ -25,7 +25,7 @@ Who have visited our hospital in the past 30 days with a symptom of cold and if
 any of the patients' friends also have visited for the same situation, and then
 trace who is likely the first person who spread the cold etc.
 
-Now imagine youself as a travel agent in Milano Italy and see how you can form
+Now imagine yourself as a travel agent in Milano Italy and see how you can form
 your agency's advertisement campaigns based on the data with the OrientDB SQL.
 
 ## What You Need
@@ -39,11 +39,11 @@ Customer => HasProfile => Profiles
 
 Customer is unique to a one person, a customer could have more than one profiles, though not normally.
 
-Profile has the Email, name and Bio and Customer has a phone number only. The asuumption is that
-an individual can only have one phone number that will uniely identify as a person. Not quite
+Profile has the Email, name and Bio and Customer has a phone number only. The assumption is that
+an individual can only have one phone number that will uniquely identify as a person. Not quite
 true but for playing around, let's assume that is the case. 
 
-A profile links to the person's friends using the Ediges labelled as "HasFriend". 
+A profile links to the person's friends using the Edges labelled as "HasFriend". 
 A customer links to a whole bunch of interesting records like places, restaurants, hotels where that
 customer has visited. 
 
@@ -80,17 +80,17 @@ traverse over to Profile to see who the person really is.
 
 1. Locate Luca's profile
 2. Locate Luca's friend
-3. Travarse over to their Customer record via HasProfile
-4. Travarse through each of the Customer's HasVisited
+3. Traverse over to their Customer record via HasProfile
+4. Traverse through each of the Customer's HasVisited
 
         select expand(out("HasFriend").in("HasProfile").out("HasVisited")) from Profiles where Email = "luca@example.com"
 
-Note that from here we can find where Luca's friends has statyed and eaten at retaurant. Simply swap
+Note that from here we can find where Luca's friends has stayed and eaten at restaurant. Simply swap
 "HasVisited" to "HasStayed" or "HasEaten"
 
 Or you cal pull all of them by just out(), which is the same as out("HasVisited", "HasStayed", "HasEaten")
 
-It's time to send Luca and his friends 2 for 1 campaign coupones if you run the restaurants or a points of interest based on these query results.
+It's time to send Luca and his friends 2 for 1 campaign coupons if you run the restaurants or a points of interest based on these query results.
 
 ## Traversing a bit deeper. Let's find Luca's friends' friends 
 
@@ -101,7 +101,7 @@ it says #62:0 can be a subquery returning many profile records.
         (Traverse out("HasFriend") from #62:0 MAXDEPTH 10)
        
 
-However, based on this query, we know Luca's frends are 1 level deep. It's a tight knit set of people.
+However, based on this query, we know Luca's friends are 1 level deep. It's a tight knit set of people.
 Luca won't be a good candidate to spend a lot of Lira to send a shiny brochure of travel deals.
 
 ## Traversing Profile and Who Has Lots of Friends
