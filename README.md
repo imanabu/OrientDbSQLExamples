@@ -51,7 +51,7 @@ We will build on the all above examples. The key is to feed the set of users in 
       
 ### Same Query but Using Traversal
 
-If you expand this to perform other queires, you will certainly notice the perormance hit.
+If you expand this to perform other queries, you will certainly notice the performance hit.
 
     select from (traverse * from (select from users where id=11)) where @class='Movies'
     
@@ -61,9 +61,9 @@ I am sure the lawyers would love to see crime movies.
 
 This is fairly complex even considering that we have only 4 types of edges and 4 types of entities.
 
-1. Get all the users who are the lawers
-2. Get all the movies the lawers rated
-3. Get the lawyer rated movies and have the Genere of "Crime"
+1. Get all the users who are the lawyers
+2. Get all the movies the lawyers rated
+3. Get the lawyer rated movies and have the Genre of "Crime"
 4. Bonus sort the movies by title
 
       SELECT FROM (
@@ -133,13 +133,15 @@ For this to work, also outV() is needed not just out(). This will then list all 
         
 ### Find the People who liked GoldenEye who live in the Bay Area and older than 37 years
 
-Check to see Golden Eye was watched by older adults in the Bay Area. Should this have been more detailed data,
-we can do more specific promotions.
+Check to see Golden Eye was watched by older adults in the Bay Area. Should this have been more detailed data,we can do more specific promotions.
 
          select expand(outV()) from `rated` WHERE outV().zipCode like "94%" and outV().age > 37 and inV().title like "GoldenEye%" limit 1000
 
 
-      
+## Next
+
+Now you understand the basics, let's tackle a bit more complex set of
+situation with the [DemoDB travel agency database.](DemoDB-SQLs.md)
     
 
 
